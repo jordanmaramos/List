@@ -8,6 +8,7 @@ import (
 
 func main() {
     // Get a greeting message and print it.
-    message := list.
-    fmt.Println(message)
+    fmt.Println("Init array")
+    myArray := list.ArrayList{}
+    fmt.Println(myArray.lastIndex)
 }
