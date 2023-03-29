@@ -11,3 +11,7 @@ type IList interface {
 	set(value int, index int)
 	length() int
 }
+
+func Hello() string{
+	return "Hello World"
+}
