@@ -14,12 +14,12 @@ type Node struct {
 	next  *Node
 }
 
-func (linkedList *LinkedList) init() {
+func (linkedList *LinkedList) Init() {
 	linkedList.head = nil
 	linkedList.lastIndex = -1
 }
 
-func (linkedList *LinkedList) add(value int) {
+func (linkedList *LinkedList) Add(value int) {
 	newNode := &Node{value: value, next: nil}
 
 	//Se é o primeiro nó da lista/lista vazia
@@ -42,7 +42,7 @@ func (linkedList *LinkedList) add(value int) {
 	}
 }
 
-func (linkedList *LinkedList) addOnIndex(value int, index int) error {
+func (linkedList *LinkedList) AddOnIndex(value int, index int) error {
 	//Verifica se o index é válido
 	if index < 0 || index > linkedList.lastIndex {
 		return fmt.Errorf("Index inválido")
@@ -71,7 +71,7 @@ func (linkedList *LinkedList) addOnIndex(value int, index int) error {
 	return nil
 }
 
-func (linkedList *LinkedList) remove() error {
+func (linkedList *LinkedList) Remove() error {
 	//Se a lista estiver vazia, não há o que remover
 	if linkedList.head == nil {
 		return fmt.Errorf("Lista vazia")
@@ -97,7 +97,7 @@ func (linkedList *LinkedList) remove() error {
 	return nil
 }
 
-func (linkedList *LinkedList) removeOnIndex(index int) error {
+func (linkedList *LinkedList) RemoveOnIndex(index int) error {
 	//Se a lista estiver vazia, não há o que remover
 	if linkedList.head == nil {
 		return fmt.Errorf("Lista vazia")
@@ -130,7 +130,7 @@ func (linkedList *LinkedList) removeOnIndex(index int) error {
 	return nil
 }
 
-func (linkedList *LinkedList) getNode(index int) (*Node, error) {
+func (linkedList *LinkedList) GetNode(index int) (*Node, error) {
 	if linkedList.head == nil {
 		return nil, fmt.Errorf("Lista vazia.")
 	}
@@ -155,7 +155,7 @@ func (linkedList *LinkedList) getNode(index int) (*Node, error) {
 	return nil, nil
 }
 
-func (linkedList *LinkedList) getValue(index int) (int, error) {
+func (linkedList *LinkedList) GetValue(index int) (int, error) {
 	if linkedList.head == nil {
 		return 0, fmt.Errorf("Lista vazia.")
 	}
@@ -164,11 +164,11 @@ func (linkedList *LinkedList) getValue(index int) (int, error) {
 		return 0, fmt.Errorf("Index inválido.")
 	}
 
-	node, erro := linkedList.getNode(index)
+	node, erro := linkedList.GetNode(index)
 	return node.value, erro
 }
 
-func (linkedList *LinkedList) setValue(value int, index int) error {
+func (linkedList *LinkedList) SetValue(value int, index int) error {
 	if linkedList.head == nil {
 		return fmt.Errorf("Lista vazia.")
 	}
@@ -192,6 +192,6 @@ func (linkedList *LinkedList) setValue(value int, index int) error {
 	return nil
 }
 
-func (linkedList *LinkedList) length() int {
+func (linkedList *LinkedList) Length() int {
 	return linkedList.lastIndex + 1
 }
