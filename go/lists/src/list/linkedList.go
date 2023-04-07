@@ -20,11 +20,11 @@ func (linkedList *LinkedList) Init() {
 }
 
 func (linkedList *LinkedList) Add(value int) {
-	newNode := &Node{value: value, next: nil}
+	newNode := Node{value: value, next: nil}
 
 	//Se é o primeiro nó da lista/lista vazia
 	if linkedList.head == nil {
-		linkedList.head = newNode
+		linkedList.head = &newNode
 	} else {
 		//Caso não seja primeiro nó da lista, busca último nó
 		lastNode := linkedList.head
@@ -35,7 +35,7 @@ func (linkedList *LinkedList) Add(value int) {
 		}
 
 		//Faço último nó apontar para o novo nó
-		lastNode.next = newNode
+		lastNode.next = &newNode
 
 		//Incrementa posição do último nó
 		linkedList.lastIndex++

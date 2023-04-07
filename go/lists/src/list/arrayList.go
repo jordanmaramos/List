@@ -44,17 +44,21 @@ func (arrayList *ArrayList) AddOnIndex(value int, index int) {
 func (arrayList *ArrayList) Remove() error {
 	if arrayList.lastIndex > 0 {
 		arrayList.lastIndex--
+		return nil
 	}
 	return fmt.Errorf("Array vazio. Não há o que remover")
 }
 
-func (arrayList *ArrayList) RemoveOnIndex(index int) {
+func (arrayList *ArrayList) RemoveOnIndex(index int) error {
 	if index >= 0 && index < arrayList.lastIndex {
 		for i := index; i < arrayList.lastIndex; i++ {
 			arrayList.values[i] = arrayList.values[i+1]
 		}
 		arrayList.lastIndex--
+		return nil
 	}
+
+	return fmt.Errorf("Array vazio. Não há o que remover")
 }
 
 func (arrayList *ArrayList) Get(index int) int {
@@ -72,4 +76,12 @@ func (arrayList *ArrayList) Set(value int, index int) {
 
 func (arrayList *ArrayList) Length() int {
 	return arrayList.lastIndex
+}
+
+func (arrayList *ArrayList) PrintList() {
+	length := arrayList.Length()
+	for i := 0; i < length; i++ {
+		fmt.Print(arrayList.values[i])
+		fmt.Print(" ")
+	}
 }
