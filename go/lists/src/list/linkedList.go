@@ -168,7 +168,7 @@ func (linkedList *LinkedList) GetValue(index int) (int, error) {
 	return node.value, erro
 }
 
-func (linkedList *LinkedList) SetValue(value int, index int) error {
+func (linkedList *LinkedList) SetValue(value, index int) error {
 	if linkedList.head == nil {
 		return fmt.Errorf("Lista vazia.")
 	}
@@ -187,8 +187,6 @@ func (linkedList *LinkedList) SetValue(value int, index int) error {
 		node.value = value
 	}
 
-	// node, erro := linkedList.getNode(index)
-	// node.value = value
 	return nil
 }
 

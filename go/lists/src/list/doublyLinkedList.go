@@ -49,7 +49,7 @@ func (doublyLinkedList *DoublyLinkedList) Add(value int) {
 func (doublyLinkedList *DoublyLinkedList) AddOnIndex(value, index int) error {
 	newNode := NodeDoubly{value: value, next: nil, previous: nil}
 	if index < 0 || index > doublyLinkedList.lastIndex {
-		return fmt.Errorf("Index inválido")
+		return fmt.Errorf("Index inválido.")
 	}
 
 	if index == 0 {
@@ -101,4 +101,151 @@ func (doublyLinkedList *DoublyLinkedList) AddOnIndex(value, index int) error {
 	doublyLinkedList.lastIndex++
 
 	return nil
+}
+
+func (doublyLinkedList *DoublyLinkedList) Remove() error {
+	if doublyLinkedList.lastIndex < 0 {
+		return fmt.Errorf("Lista vazia.")
+	}
+
+	doublyLinkedList.tail.previous.next = nil
+	doublyLinkedList.tail = doublyLinkedList.tail.previous
+
+	//Update lastIndex
+	doublyLinkedList.lastIndex--
+
+	return nil
+}
+
+func (doublyLinkedList *DoublyLinkedList) RemoveOnIndex(index int) error {
+	if doublyLinkedList.lastIndex < 0 {
+		return fmt.Errorf("Lista vazia.")
+	}
+
+	if index < 0 || index > doublyLinkedList.lastIndex {
+		return fmt.Errorf("Index inválido.")
+	}
+
+	if index == 0 {
+		doublyLinkedList.head.next.previous = nil
+		doublyLinkedList.head = doublyLinkedList.head.next
+	} else if index == doublyLinkedList.lastIndex {
+		doublyLinkedList.tail.previous.next = nil
+		doublyLinkedList.tail = doublyLinkedList.tail.previous
+	} else {
+		distanceFromEnd := doublyLinkedList.lastIndex - index
+
+		if distanceFromEnd < index {
+			auxNode := doublyLinkedList.tail
+			for i := doublyLinkedList.lastIndex; i != index; i-- {
+				auxNode = auxNode.previous
+			}
+
+			auxNode.previous.next = auxNode.next
+			auxNode.next.previous = auxNode.previous
+
+		} else {
+			auxNode := doublyLinkedList.head
+			for i := 0; i < doublyLinkedList.lastIndex; i++ {
+				auxNode = auxNode.next
+			}
+
+			auxNode.previous.next = auxNode.next
+			auxNode.next.previous = auxNode.previous
+		}
+	}
+
+	//Update last index
+	doublyLinkedList.lastIndex--
+
+	return nil
+}
+
+func (doublyLinkedList *DoublyLinkedList) GetNode(index int) (*NodeDoubly, error) {
+	if doublyLinkedList.lastIndex < 0 {
+		return nil, fmt.Errorf("Lista vazia.")
+	}
+
+	if index < 0 || index > doublyLinkedList.lastIndex {
+		return nil, fmt.Errorf("Index inválido")
+	}
+
+	if index == 0 {
+		return doublyLinkedList.head, nil
+	} else if index == doublyLinkedList.lastIndex {
+		return doublyLinkedList.tail, nil
+	} else {
+		distanceFromEnd := doublyLinkedList.lastIndex - index
+
+		if distanceFromEnd < index {
+			//Search from the tail
+			auxNode := doublyLinkedList.tail
+			for i := doublyLinkedList.lastIndex; i != index; i-- {
+				auxNode = auxNode.previous
+			}
+			return auxNode, nil
+		} else {
+			//Search from the head
+			auxNode := doublyLinkedList.head
+			for i := 0; i != index; i++ {
+				auxNode = auxNode.next
+			}
+			return auxNode, nil
+		}
+	}
+
+	return nil, nil
+}
+
+func (doublyLinkedList *DoublyLinkedList) GetValue(index int) (int, error) {
+	if doublyLinkedList.lastIndex < 0 {
+		return 0, fmt.Errorf("Lista Vazia")
+	}
+
+	if index < 0 || index > doublyLinkedList.lastIndex {
+		return 0, fmt.Errorf("Index inválido")
+	}
+
+	node, erro := doublyLinkedList.GetNode(index)
+
+	return node.value, erro
+}
+
+func (doublyLinkedList *DoublyLinkedList) SetValue(value, index int) error {
+	if doublyLinkedList.lastIndex < 0 {
+		return fmt.Errorf("Lista vazia.")
+	}
+
+	if index < 0 || index > doublyLinkedList.lastIndex {
+		return fmt.Errorf("Index inválido.")
+	}
+
+	if index == 0 {
+		doublyLinkedList.head.value = value
+	} else if index == doublyLinkedList.lastIndex {
+		doublyLinkedList.tail.value = value
+	} else {
+		distanceFromEnd := doublyLinkedList.lastIndex - index
+
+		if distanceFromEnd < index {
+			//Search from the tail
+			auxNode := doublyLinkedList.tail
+			for i := doublyLinkedList.lastIndex; i != index; i-- {
+				auxNode = auxNode.previous
+			}
+			auxNode.value = value
+		} else {
+			//Search from the head
+			auxNode := doublyLinkedList.head
+			for i := 0; i != index; i++ {
+				auxNode = auxNode.next
+			}
+			auxNode.value = value
+		}
+	}
+	return nil
+}
+
+func (doublyLinkedList *DoublyLinkedList) Length() int {
+	return doublyLinkedList.lastIndex + 1
 }
