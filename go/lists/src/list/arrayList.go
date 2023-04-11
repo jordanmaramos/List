@@ -11,7 +11,7 @@ type ArrayList struct {
 
 func (arrayList *ArrayList) Init() {
 	arrayList.values = make([]int, 5)
-	arrayList.lastIndex = -1
+	arrayList.lastIndex = 0
 }
 
 func (arrayList *ArrayList) Increment() {
@@ -29,8 +29,8 @@ func (arrayList *ArrayList) Add(value int) {
 	if arrayList.lastIndex == len(arrayList.values) {
 		arrayList.Increment()
 	}
-	arrayList.lastIndex++
 	arrayList.values[arrayList.lastIndex] = value
+	arrayList.lastIndex++
 }
 
 func (arrayList *ArrayList) AddOnIndex(value int, index int) {
@@ -40,6 +40,8 @@ func (arrayList *ArrayList) AddOnIndex(value int, index int) {
 	for i := arrayList.lastIndex; i > index; i-- {
 		arrayList.values[i] = arrayList.values[i-1]
 	}
+	arrayList.values[index] = value
+	arrayList.lastIndex++
 }
 
 func (arrayList *ArrayList) Remove() error {
