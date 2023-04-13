@@ -31,12 +31,19 @@ func (arrayQueue *ArrayQueue) Init(capacity int) error {
 }
 
 func (arrayQueue *ArrayQueue) Push(value int) {
+	if arrayQueue == nil {
+		return
+	}
 	if arrayQueue.IsEmpty() {
 		arrayQueue.front = 0
 		arrayQueue.back = 0
 		arrayQueue.values[0] = value
 		arrayQueue.length = 1
 	} else {
+		arrayQueue.back = (arrayQueue.back + 1) % arrayQueue.capacity
+		if arrayQueue.back == arrayQueue.capacity {
+			arrayQueue.Double()
+		}
 		arrayQueue.back = (arrayQueue.back + 1) % arrayQueue.capacity
 		arrayQueue.values[arrayQueue.back] = value
 		arrayQueue.length++
@@ -78,4 +85,18 @@ func (arrayQueue *ArrayQueue) IsEmpty() bool {
 
 func (arrayQueue *ArrayQueue) IsFull() bool {
 	return ((arrayQueue.back + 1) % arrayQueue.capacity) == arrayQueue.front
+}
+
+func (arrayQueue *ArrayQueue) Double() {
+	//Cria novo arrayQueue vazio
+	newCapacity := arrayQueue.capacity * 2
+	newQueue := make([]int, newCapacity)
+
+	//Preenche novo arrayQueue
+	for i := 0; i < len(arrayQueue.values); i++ {
+		newQueue[i] = arrayQueue.values[i]
+	}
+	//Devolve novo array para arrayList
+	arrayQueue.values = newQueue
+	arrayQueue.capacity = newCapacity
 }

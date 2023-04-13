@@ -2,17 +2,27 @@ package main
 
 import (
 	"fmt"
-	"list"
+	"queue"
 )
 
 func main() {
-	array := list.ArrayList{}
-	array.Init()
+	queue := queue.ArrayQueue{}
 
-	for i := 0; i < 10; i++ {
-		array.Add(i)
+	queue.Init(10)
+	for i := 0; i < 5; i++ {
+		queue.Push(i)
 	}
-	fmt.Printf("Tamanho da lista: %d\n", array.Length())
-	array.PrintList()
+
+	for i := 0; i < 3; i++ {
+		queue.Pop()
+	}
+
+	for i := 0; i < 5; i++ {
+		queue.Push(i)
+	}
+
+	peek, errorr := queue.Peek()
+	fmt.Printf("Frente: %d", peek)
+	fmt.Errorf("error : %s", errorr)
 
 }
