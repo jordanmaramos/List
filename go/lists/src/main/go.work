@@ -4,4 +4,6 @@ use (
 	.
 	../list
 	../queue
+	../stack
+	../test
 )

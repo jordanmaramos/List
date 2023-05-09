@@ -5,59 +5,59 @@ import (
 )
 
 type ArrayList struct {
-	values    []int
-	lastIndex int
+	Values    []int
+	LastIndex int
 }
 
 func (arrayList *ArrayList) Init() {
-	arrayList.values = make([]int, 5)
-	arrayList.lastIndex = 0
+	arrayList.Values = make([]int, 5)
+	arrayList.LastIndex = 0
 }
 
 func (arrayList *ArrayList) Increment() {
 	//Cria novo array vazio
-	newArrayList := make([]int, len(arrayList.values)+1)
+	newArrayList := make([]int, len(arrayList.Values)+1)
 	//Preenche novo array com valores de arrayList
-	for i := 0; i < len(arrayList.values); i++ {
-		newArrayList[i] = arrayList.values[i]
+	for i := 0; i < len(arrayList.Values); i++ {
+		newArrayList[i] = arrayList.Values[i]
 	}
 	//Devolve novo array para arrayList
-	arrayList.values = newArrayList
+	arrayList.Values = newArrayList
 }
 
 func (arrayList *ArrayList) Add(value int) {
-	if arrayList.lastIndex == len(arrayList.values) {
+	if arrayList.LastIndex == len(arrayList.Values) {
 		arrayList.Increment()
 	}
-	arrayList.values[arrayList.lastIndex] = value
-	arrayList.lastIndex++
+	arrayList.Values[arrayList.LastIndex] = value
+	arrayList.LastIndex++
 }
 
 func (arrayList *ArrayList) AddOnIndex(value int, index int) {
-	if arrayList.lastIndex == len(arrayList.values) {
+	if arrayList.LastIndex == len(arrayList.Values) {
 		arrayList.Increment()
 	}
-	for i := arrayList.lastIndex; i > index; i-- {
-		arrayList.values[i] = arrayList.values[i-1]
+	for i := arrayList.LastIndex; i > index; i-- {
+		arrayList.Values[i] = arrayList.Values[i-1]
 	}
-	arrayList.values[index] = value
-	arrayList.lastIndex++
+	arrayList.Values[index] = value
+	arrayList.LastIndex++
 }
 
 func (arrayList *ArrayList) Remove() error {
-	if arrayList.lastIndex > 0 {
-		arrayList.lastIndex--
+	if arrayList.LastIndex > 0 {
+		arrayList.LastIndex--
 		return nil
 	}
 	return fmt.Errorf("Array vazio. Não há o que remover")
 }
 
 func (arrayList *ArrayList) RemoveOnIndex(index int) error {
-	if index >= 0 && index < arrayList.lastIndex {
-		for i := index; i < arrayList.lastIndex; i++ {
-			arrayList.values[i] = arrayList.values[i+1]
+	if index >= 0 && index < arrayList.LastIndex {
+		for i := index; i < arrayList.LastIndex; i++ {
+			arrayList.Values[i] = arrayList.Values[i+1]
 		}
-		arrayList.lastIndex--
+		arrayList.LastIndex--
 		return nil
 	}
 
@@ -65,26 +65,26 @@ func (arrayList *ArrayList) RemoveOnIndex(index int) error {
 }
 
 func (arrayList *ArrayList) Get(index int) int {
-	if index >= 0 && index < arrayList.lastIndex {
-		return arrayList.values[index]
+	if index >= 0 && index < arrayList.LastIndex {
+		return arrayList.Values[index]
 	}
 	return -1
 }
 
 func (arrayList *ArrayList) Set(value int, index int) {
-	if index >= 0 && index < arrayList.lastIndex {
-		arrayList.values[index] = value
+	if index >= 0 && index < arrayList.LastIndex {
+		arrayList.Values[index] = value
 	}
 }
 
 func (arrayList *ArrayList) Length() int {
-	return arrayList.lastIndex
+	return arrayList.LastIndex
 }
 
 func (arrayList *ArrayList) PrintList() {
 	length := arrayList.Length()
 	for i := 0; i < length; i++ {
-		fmt.Print(arrayList.values[i])
+		fmt.Print(arrayList.Values[i])
 		fmt.Print(" ")
 	}
 }
